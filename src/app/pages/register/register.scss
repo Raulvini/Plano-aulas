@@ -1,0 +1,373 @@
+mat-card {
+  width: 100% !important; /* Um pouco menor para dar respiro nas bordas */
+  max-width: 100vw;
+  margin: 15px auto !important; /* O 'auto' centraliza o card horizontalmente */
+  display: flex;
+  flex-direction: column;
+  color: #1A2E44;
+  background-color: #1A2E44;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+h1
+{
+  color: white;
+  font-family:'Courier New', Courier, monospace;
+  
+  margin: 10px 20px;
+}
+
+/* Card Principal */
+.download-card {
+  width: 90%;
+  max-width: 300px;
+  aspect-ratio: 3 / 4;
+  background-color: #1a2a3a; /* Azul escuro do seu design */
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 20px 25px 20px;
+  margin: 20px auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Customização do Ícone Estilo Word */
+.file-icon-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.word-icon-box {
+  position: relative;
+  background: #2b579a; /* Cor oficial Word */
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.word-icon {
+  font-size: 60px !important;
+  width: 60px !important;
+  height: 60px !important;
+  color: white;
+}
+
+.word-letter {
+  position: absolute;
+  font-weight: bold;
+  font-size: 24px;
+  color: white;
+  bottom: 10px;
+  left: 10px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Info do Arquivo (Branco) */
+.file-info {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.file-name {
+  color: white;
+  font-size: 0.9rem;
+  font-family: sans-serif;
+  opacity: 0.9;
+  word-break: break-all;
+}
+
+/* Botão de Download Estilizado */
+.btn-download {
+  width: 100%;
+  background: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.btn-download mat-icon {
+  color: #2b579a;
+  font-size: 28px;
+}
+
+.btn-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.1;
+}
+
+.action-label {
+  font-size: 10px;
+  color: #666;
+  font-weight: bold;
+}
+
+.target-label {
+  font-size: 16px;
+  color: #2b579a;
+  font-weight: 800;
+}
+
+.btn-download:active {
+  transform: scale(0.95);
+  background: #f0f0f0;
+}
+
+
+button{
+  margin: 10px 5px;
+}
+
+.itens-grid, .dados {
+  display: flex;
+  flex-direction: column; 
+  width: 100%;
+  padding: 0; /* Removi padding interno que pode estar empurrando os itens */
+  gap: 12px;
+  align-items: center; /* Centraliza os itens dentro da grid */
+}
+
+.item-checkbox {
+  width: 100%; /* Ocupa toda a largura disponível do mat-card */
+  max-width: 100%; /* Impede de sair da tela */
+  background: #1A2E44;
+  padding: 12px; /* Mais espaço interno para o clique */
+  border: 1px solid #eee;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+  box-sizing: border-box; /* Garante que o padding não aumente o 100% */
+}
+
+/* Ajuste do Stepper para não quebrar no mobile */
+::ng-deep .mat-horizontal-stepper-header-container {
+  padding: 0 5px !important;
+}
+
+::ng-deep .mat-step-header {
+  padding: 8px 12px !important;
+}
+
+/* Esconder o label do passo no mobile se for muito pequeno */
+@media (max-width: 400px) {
+  ::ng-deep .mat-step-text-label {
+    display: none; /* Deixa apenas o número/bolinha se a tela for minúscula */
+  }
+}
+
+/* Itens individuais ocupam 100% no mobile */
+.materia,
+.block,
+.blockEscola,
+.textarea,
+.item-checkbox {
+  width: 100%;
+  flex: 1 1 100%;
+ 
+}
+
+.block,
+.blockEscola,
+.textarea{
+  margin: 10px ;
+}
+
+.item-checkbox {
+  background: #1A2E44;
+  padding: 8px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  transition: background 0.2s;
+
+  ::ng-deep .mat-internal-form-field>label {
+    color: #eee;
+  }
+
+  ::ng-deep .mdc-checkbox__background {
+    border: solid #eee 2px;
+  }
+}
+
+.item-checkbox:hover {
+  background: #17293d;
+}
+
+/* 2. ADAPTAÇÃO PARA DESKTOP (Mínimo de 768px) */
+@media (min-width: 768px) {
+  mat-card {
+    width: 80%;
+  }
+  .download-card {
+    max-width: 280px;
+  }
+
+  .itens-grid,
+  .dados {
+    flex-direction: row;
+    /* Volta a ficar lado a lado */
+    flex-wrap: wrap;
+  }
+
+  .block {
+    flex: 1 1 48%;
+  }
+
+  /* 2 colunas */
+
+  .blockEscola {
+    flex: 1 1 70%;
+  }
+
+  .textarea {
+    flex: 1 1 100%;
+  }
+
+  .item-checkbox {
+    flex: 0 1 calc(33.33% - 15px);
+    /* 3 colunas */
+  }
+}
+
+/* 3. ESTILIZAÇÃO DO STEPPER (Cores Customizadas) */
+.athena-stepper {
+  --mat-form-field-outlined-error-caret-color: var(--mat-form-field-outlined-error-focus-outline-color);
+
+  --mat-form-field-outlined-caret-color: white;
+
+  --mat-form-field-outlined-error-hover-outline-color: var(--mat-form-field-outlined-error-label-text-color);
+
+  --mat-form-field-outlined-error-outline-color: #fb7d874;
+
+  --mat-form-field-outlined-error-hover-outline-color: #fb7d87;
+
+  --mat-form-field-outlined-error-focus-outline-color: #fb7d87;
+
+  --mat-form-field-outlined-error-outline-color: #fb7d87;
+
+  --mat-form-field-outlined-error-label-text-color: #fb7d87;
+
+  --mat-form-field-outlined-error-hover-label-text-color: #fb7d87;
+
+  --mat-form-field-outlined-label-text-color: white;
+
+  --mat-form-field-outlined-hover-label-text-color: white;
+
+  --mat-form-field-outlined-focus-outline-color: #B59410;
+
+  --mat-form-field-outlined-hover-outline-color: #B59410;
+
+  --mat-form-field-outlined-focus-label-text-color: white;
+
+  --mat-select-enabled-trigger-text-color: white;
+
+  --mat-select-enabled-arrow-color: white;
+
+
+
+  --mat-select-focused-arrow-color: white;
+
+  --mat-select-enabled-focus-arrow-color: white;
+
+  --mat-select-invalid-arrow-color: #fb7d87;
+
+  --mat-datepicker-toggle-icon-color: white !important;
+
+
+
+  --mat-form-field-error-text-color: #fb7d87;
+
+
+
+  --mat-button-outlined-label-text-color: white;
+
+
+
+  background-color: #1A2E44;
+
+  // A linha que conecta os passos em Dourado Oliva
+
+  --mat-stepper-line-color: #B59410;
+
+
+
+
+
+  // O fundo da bolinha do passo selecionado em Azul Noturno
+
+  --mat-stepper-header-selected-state-icon-background-color: #B59410;
+
+  --mat-stepper-header-selected-state-icon-foreground-color: #FFFFFF;
+
+  --mat-stepper-header-selected-state-label-text-color: white;
+
+  --mat-stepper-header-icon-background-color: #1A2E44;
+
+
+
+  --mat-stepper-header-label-text-color: white;
+
+  --mat-stepper-header-label-text-color: white;
+
+
+
+
+
+  // O passo que já foi concluído (Done)
+
+  --mat-stepper-header-completed-state-icon-background-color: #1A2E44;
+
+
+
+  // Ajuste do ícone de edição (se houver)
+
+  --mat-stepper-header-edit-state-icon-background-color: #1A2E44;
+
+
+
+  // Estilização extra para o ícone selecionado
+
+  ::ng-deep .mat-step-icon {
+
+    border: 2px solid #B59410 !important; // Dourado Oliva
+
+    box-sizing: border-box;
+
+  }
+
+
+
+  .mat-mdc-form-field-input-control {
+
+    color: whitesmoke; // Azul Noturno para o texto digitado
+
+    caret-color: whitesmoke; // Cursor em Dourado Oliva
+
+  }
+
+  /* Ajuste Mobile para o Stepper: Esconde texto longo se a tela for muito pequena */
+  @media (max-width: 480px) {
+    ::ng-deep .mat-step-label {
+      font-size: 12px;
+    }
+  }
+}
+
+/* 4. COMPONENTES EXTRAS (Cards de Arquivo) */

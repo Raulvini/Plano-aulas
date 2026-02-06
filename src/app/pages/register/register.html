@@ -1,0 +1,278 @@
+
+
+
+
+
+
+<mat-card class="example-card">
+  <mat-card-header>
+    
+      
+    <h1>Gerador plano de aula</h1>
+    
+   
+   
+
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <mat-stepper class="athena-stepper" orientation="horizontal" #stepper linear="true">
+
+      <mat-step [stepControl]="form">
+        @if (form) {
+        <form [formGroup]="form" (ngSubmit)="enviar()">
+
+          <ng-template matStepLabel>Selecione sua Metodologia</ng-template>
+
+          <div formArrayName="listaItens" class="itens-grid">
+            @for (item of todosItens(); track i; let i = $index) {
+            <div class="item-checkbox" [class.item-ativo]="listaItensArray.at(i).value">
+              <mat-checkbox [formControlName]="i" a>
+                {{ item }}
+              </mat-checkbox>
+            </div>
+            }
+          </div>
+          @if (listaItensArray.invalid ) {
+          <mat-error style="display: block; margin-top: 10px;">
+            Por favor, selecione pelo menos um item para o planejamento da aula.
+          </mat-error>
+          }
+        </form>
+        }
+
+        <div>
+          <button matButton="outlined" matStepperNext [disabled]="form.invalid">Proximo</button>
+        </div>
+
+      </mat-step>
+      <mat-step [stepControl]="forCad">
+        @if (form) {
+        <ng-template matStepLabel>Preencha seus dados</ng-template>
+
+
+        <form [formGroup]="forCad">
+          <div class="dados">
+
+
+            <mat-form-field class="blockEscola" appearance="outline">
+              <mat-label>Escola</mat-label>
+              <input matInput formControlName="escola">
+              @if(forCad.get('escola')?.touched && escolaErro() ){
+              <mat-error>{{escolaErro()}}</mat-error>
+
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Data</mat-label>
+              <input matInput formControlName="data" [matDatepicker]="picker">
+              <mat-hint style="color: aliceblue;">Mês/Dia/Ano</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+
+              @if(forCad.get('data')?.touched && dataErro() ){
+              <mat-error>{{dataErro()}}</mat-error>
+
+              }
+            </mat-form-field>
+
+
+
+            <mat-form-field class="block" appearance="outline">
+              <mat-label>Professor</mat-label>
+              <input matInput formControlName="nome">
+
+              @if(forCad.get('nome')?.touched && nomeErro() ){
+              <mat-error>{{nomeErro()}}</mat-error>
+
+              }
+            </mat-form-field>
+
+            <mat-form-field class="block" appearance="outline">
+              <mat-label>Coordenador</mat-label>
+              <input matInput formControlName="cor">
+
+              @if(forCad.get('cor')?.touched && corErro() ){
+              <mat-error>{{corErro()}}</mat-error>
+
+              }
+            </mat-form-field>
+
+
+
+
+            <mat-form-field class="block" appearance="outline">
+              <mat-label>Tema</mat-label>
+              <input matInput formControlName="tema">
+
+              @if(forCad.get('tema')?.touched && temaErro() ){
+              <mat-error>{{temaErro()}}</mat-error>
+
+              }
+            </mat-form-field>
+
+            <mat-form-field style="flex: 1 1 15%;" appearance="outline">
+              <mat-label>Materia</mat-label>
+              <mat-select formControlName="mat" required appearance="outline">
+
+                @for (materia of materias(); track materia) {
+                <mat-option [value]="materia">{{ materia }}</mat-option>
+                }
+              </mat-select>
+              @if(forCad.get('mat')?.touched && matErro() ){
+              <mat-error>{{matErro()}}</mat-error>
+
+              }
+            </mat-form-field>
+
+            <mat-form-field style="flex: 1 1 15%;" appearance="outline">
+              <mat-label>Turma</mat-label>
+              <mat-select formControlName="turma" required>
+
+                <mat-option value="1° ano">1° ano</mat-option>
+                <mat-option value="2° ano">2° ano</mat-option>
+
+              </mat-select>
+              @if(forCad.get('turma')?.touched && turmaErro() ){
+              <mat-error>{{turmaErro()}}</mat-error>
+
+              }
+
+            </mat-form-field>
+
+
+
+
+            <mat-form-field style="flex: 1 1 15%;" appearance="outline">
+              <mat-label>Alunos presentes</mat-label>
+              <input matInput formControlName="alunos" inputmode="numeric" mask="999">
+
+
+              @if (forCad.get('alunos')?.hasError('required')) {
+              <mat-error>Este campo é obrigatório</mat-error>
+              }
+
+
+
+            </mat-form-field>
+
+
+            <div>
+              @if (forCad.invalid ) {
+              <mat-error style="display: block; margin-top: 10px;">
+                Por favor, preencha seus dados.
+              </mat-error>
+              }
+              <button matButton="outlined" matStepperPrevious>Anterior</button>
+              <button matButton="outlined" matStepperNext [disabled]="forCad.invalid">Proximo</button>
+            </div>
+          </div>
+        </form>
+        }
+      </mat-step>
+
+
+
+
+      <mat-step [stepControl]="fordMat">
+        @if (form) {
+        @if(!carregando() && !arquivoGerado()){
+        <form [formGroup]="fordMat" (ngSubmit)="enviar()">
+
+          <ng-template matStepLabel>Selecione o material ultizado em sala</ng-template>
+
+          <div formArrayName="listaMateriais" class="itens-grid">
+            @for (item of materiaisUltilizados(); track i; let i = $index) {
+            <div class="item-checkbox" [class.item-ativo]="listamateriasArray.at(i).value">
+              <mat-checkbox [formControlName]="i" a>
+                {{ item }}
+              </mat-checkbox>
+            </div>
+            }
+          </div>
+          @if (listamateriasArray.invalid ) {
+          <mat-error style="display: block; margin-top: 10px;">
+            Por favor, selecione pelo menos um item para o planejamento da aula.
+          </mat-error>
+          }
+        </form>
+        }
+        @else if (carregando()) {
+        <div style="display: flex; justify-content: center; align-items: center; min-height: 200px;">
+          <mat-spinner></mat-spinner>
+        </div>
+        }
+
+        @else if (arquivoGerado()) {
+        <div class="download-card">
+          <div class="file-icon-container">
+            <div class="word-icon-box">
+              <mat-icon class="word-icon">description</mat-icon>
+              <span class="word-letter">W</span>
+            </div>
+          </div>
+
+          <div class="file-info">
+            <span class="file-name">Plano_de_Aula_IA.docx</span>
+          </div>
+
+          <button class="btn-download" (click)="baixarArquivo()">
+            <mat-icon>download</mat-icon>
+            <div class="btn-text">
+              <span class="action-label">BAIXAR</span>
+              <span class="target-label">Arquivo</span>
+            </div>
+          </button>
+        </div>
+        }
+        }
+
+        <div>
+          <button matButton="outlined" matStepperPrevious>Anterior</button>
+          <button matButton="outlined" [disabled]="fordMat.invalid || carregando()" (click)="subimit()"> Gerar Plano</button>
+          <button matButton="outlined"  onclick="window.location.reload()"> Reiniciar plano <mat-icon>refresh</mat-icon></button>
+        </div>
+
+      </mat-step>
+
+
+
+
+
+
+
+
+
+
+      <!-- <mat-step>
+        <ng-template matStepLabel>Gerar Plano</ng-template>
+
+        
+        <div style=" justify-content: center; align-items: center; min-height: 200px;" [hidden]="carregando">
+          <mat-spinner></mat-spinner>
+        </div>
+
+        
+
+
+      </mat-step> -->
+
+    </mat-stepper>
+
+
+
+
+
+
+
+
+
+
+  </mat-card-content>
+  <mat-card-actions>
+
+
+  </mat-card-actions>
+</mat-card>
